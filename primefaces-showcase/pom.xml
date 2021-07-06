@@ -19,10 +19,10 @@
     <properties>
         <owb.version>2.0.23</owb.version>
         <hibernate-validator.version>6.1.5.Final</hibernate-validator.version>
-        <mojarra.version>2.3.16</mojarra.version>
+        <mojarra.version>3.0.1</mojarra.version>
         <myfaces.version>2.3.9</myfaces.version>
         <resteasy.version>4.6.1.Final</resteasy.version>
-        <jetty.version>9.4.36.v20210114</jetty.version>
+        <jetty.version>9.4.42.v20210604</jetty.version>
     </properties>
 
     <dependencies>
@@ -209,7 +209,7 @@
             <plugin>
                 <groupId>nl.geodienstencentrum.maven</groupId>
                 <artifactId>sass-maven-plugin</artifactId>
-                <version>3.5.4</version>
+                <version>3.7.2</version>
                 <executions>
                     <execution>
                         <phase>generate-resources</phase>
