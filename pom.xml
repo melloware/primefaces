@@ -227,7 +227,7 @@
             <plugin>
                 <groupId>com.mycila</groupId>
                 <artifactId>license-maven-plugin</artifactId>
-                <version>4.0.rc2</version>
+                <version>4.1</version>
                 <configuration>
                     <header>${project.basedir}/conf/header.txt</header>
                     <includes>
@@ -247,7 +247,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.1.1</version>
+                <version>3.1.2</version>
                 <configuration>
                     <consoleOutput>true</consoleOutput>
                     <configLocation>/conf/checkstyle.xml</configLocation>
@@ -368,7 +368,7 @@
             <dependency>
                 <groupId>com.rometools</groupId>
                 <artifactId>rome</artifactId>
-                <version>1.15.0</version>
+                <version>1.16.0</version>
             </dependency>
 
             <!-- File Upload -->
