@@ -1484,11 +1484,17 @@ PrimeFaces.widget.DataTable = PrimeFaces.widget.DeferredWidget.extend({
         }
 
         this.scrollBody.on('scroll.dataTable', function() {
-            var scrollShift = $this.getScrollbarWidth();
+            var scrollShift = $this.scrollBody.scrollLeft(),
+            scrollTop = $this.scrollBody.scrollTop();
 
-            var marginProperty = $this.isRTL ? 'margin-left' : 'margin-right';
-            $this.scrollHeaderBox.css(marginProperty, scrollShift + 'px');
-            $this.scrollFooterBox.css(marginProperty, scrollShift + 'px');
+            if ($this.isRTL) {
+                $this.scrollHeaderBox.css('margin-right', (scrollShift - hScrollWidth + this.clientWidth) + 'px');
+                $this.scrollFooterBox.css('margin-right', (scrollShift - hScrollWidth + this.clientWidth) + 'px');
+            }
+            else {
+                $this.scrollHeaderBox.css('margin-left', -scrollShift + 'px');
+                $this.scrollFooterBox.css('margin-left', -scrollShift + 'px');
+            }
 
             if($this.isEmpty()) {
                 return;
