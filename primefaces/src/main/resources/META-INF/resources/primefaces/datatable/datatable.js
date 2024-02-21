@@ -1484,16 +1484,15 @@ PrimeFaces.widget.DataTable = PrimeFaces.widget.DeferredWidget.extend({
         }
 
         this.scrollBody.on('scroll.dataTable', function() {
-            var scrollShift = $this.scrollBody.scrollLeft(),
-            scrollTop = $this.scrollBody.scrollTop();
+            var scrollLeft = $this.scrollBody.scrollLeft();
 
             if ($this.isRTL) {
-                $this.scrollHeaderBox.css('margin-right', (scrollShift - hScrollWidth + this.clientWidth) + 'px');
-                $this.scrollFooterBox.css('margin-right', (scrollShift - hScrollWidth + this.clientWidth) + 'px');
+                $this.scrollHeaderBox.css('margin-right', scrollLeft + 'px');
+                $this.scrollFooterBox.css('margin-right', scrollLeft + 'px');
             }
             else {
-                $this.scrollHeaderBox.css('margin-left', -scrollShift + 'px');
-                $this.scrollFooterBox.css('margin-left', -scrollShift + 'px');
+                $this.scrollHeaderBox.css('margin-left', -scrollLeft + 'px');
+                $this.scrollFooterBox.css('margin-left', -scrollLeft + 'px');
             }
 
             if($this.isEmpty()) {
