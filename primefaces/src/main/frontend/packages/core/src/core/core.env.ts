@@ -1,7 +1,7 @@
 import { core } from "./core.js";
 import type { BaseWidgetCfg } from "./core.widget.js";
 
-import type { Matchs } from "jquery.browser";
+import type { BrowserDetection } from "@melloware/jquery.browser";
 
 /**
  * The class with functionality related to the browser environment, such as information about the current browser.
@@ -27,7 +27,7 @@ export class Environment {
     /**
      * The current browser type.
      */
-    browser: Matchs | null = null;
+    browser: BrowserDetection | null = null;
     /**
      * `true` if the user's current OS setting prefers dark mode, `false` otherwise.
      */
