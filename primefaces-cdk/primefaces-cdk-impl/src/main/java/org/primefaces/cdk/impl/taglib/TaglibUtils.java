@@ -27,19 +27,21 @@ import org.primefaces.cdk.api.FacesBehaviorHandler;
 import org.primefaces.cdk.api.FacesBehaviorInfo;
 import org.primefaces.cdk.api.FacesComponentHandler;
 import org.primefaces.cdk.api.FacesComponentInfo;
+import org.primefaces.cdk.api.FacesConverterInfo;
 import org.primefaces.cdk.api.FacesTagHandler;
 import org.primefaces.cdk.api.FacesValidatorInfo;
 import org.primefaces.cdk.api.Function;
 import org.primefaces.cdk.api.PrimePropertyKeys;
 import org.primefaces.cdk.api.Property;
+import org.primefaces.cdk.api.converter.PrimeConverterHandler;
 import org.primefaces.cdk.api.validator.PrimeValidatorHandler;
 import org.primefaces.cdk.impl.CdkUtils;
 import org.primefaces.cdk.impl.container.BehaviorInfo;
 import org.primefaces.cdk.impl.container.ComponentInfo;
+import org.primefaces.cdk.impl.container.ConverterInfo;
 import org.primefaces.cdk.impl.container.FunctionInfo;
 import org.primefaces.cdk.impl.container.TagHandlerInfo;
 import org.primefaces.cdk.impl.container.ValidatorInfo;
-import org.primefaces.cdk.impl.literal.PropertyLiteral;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -68,6 +70,7 @@ public final class TaglibUtils {
 
     public enum TagType {
         BEHAVIOR,
+        CONVERTER,
         VALIDATOR,
         COMPONENT,
         TAG_HANDLER
@@ -87,19 +90,29 @@ public final class TaglibUtils {
     }
 
     private static String getTagName(Class<?> clazz) {
-        FacesBehaviorInfo behaviorInfo = clazz.getAnnotation(FacesBehaviorInfo.class);
-        if (behaviorInfo != null && !behaviorInfo.name().isEmpty()) {
-            return behaviorInfo.name();
+        FacesBehaviorInfo facesBehaviorInfo = clazz.getAnnotation(FacesBehaviorInfo.class);
+        if (facesBehaviorInfo != null && !facesBehaviorInfo.name().isEmpty()) {
+            return facesBehaviorInfo.name();
         }
 
-        FacesComponentInfo componentInfo = clazz.getAnnotation(FacesComponentInfo.class);
-        if (componentInfo != null && !componentInfo.name().isEmpty()) {
-            return componentInfo.name();
+        FacesComponentInfo facesComponentInfo = clazz.getAnnotation(FacesComponentInfo.class);
+        if (facesComponentInfo != null && !facesComponentInfo.name().isEmpty()) {
+            return facesComponentInfo.name();
         }
 
-        FacesValidatorInfo validatorInfo = clazz.getAnnotation(FacesValidatorInfo.class);
-        if (validatorInfo != null && !validatorInfo.name().isEmpty()) {
-            return validatorInfo.name();
+        FacesValidatorInfo facesValidatorInfo = clazz.getAnnotation(FacesValidatorInfo.class);
+        if (facesValidatorInfo != null && !facesValidatorInfo.name().isEmpty()) {
+            return facesValidatorInfo.name();
+        }
+
+        FacesConverterInfo facesConverterInfo = clazz.getAnnotation(FacesConverterInfo.class);
+        if (facesConverterInfo != null && !facesConverterInfo.name().isEmpty()) {
+            return facesConverterInfo.name();
+        }
+
+        FacesTagHandler facesTagHandler = clazz.getAnnotation(FacesTagHandler.class);
+        if (facesTagHandler != null && !facesTagHandler.name().isEmpty()) {
+            return facesTagHandler.name();
         }
 
         String name = String.valueOf(clazz.getSimpleName().charAt(0)).toLowerCase() +
@@ -110,27 +123,29 @@ public final class TaglibUtils {
         if (name.endsWith("TagHandler")) {
             name = name.substring(0, name.length() - "TagHandler".length());
         }
+        if (name.endsWith("Converter")) {
+            name = name.substring(0, name.length() - "Converter".length());
+        }
+        if (name.endsWith("Validator")) {
+            name = name.substring(0, name.length() - "Validator".length());
+        }
         return name;
     }
 
-    private static String getComponentDescription(Class<?> componentClass) {
-        FacesComponentInfo annotation = componentClass.getAnnotation(FacesComponentInfo.class);
-        return annotation == null ? null : annotation.description();
-    }
+    private static String getDescription(Class<?> clazz) {
+        FacesComponentInfo facesComponentInfo = clazz.getAnnotation(FacesComponentInfo.class);
+        if (facesComponentInfo != null) facesComponentInfo.description();
 
-    private static String getBehaviorDescription(Class<?> behaviorClass) {
-        FacesBehaviorInfo annotation = behaviorClass.getAnnotation(FacesBehaviorInfo.class);
-        return annotation == null ? null : annotation.description();
-    }
+        FacesBehaviorInfo facesBehaviorInfo = clazz.getAnnotation(FacesBehaviorInfo.class);
+        if (facesBehaviorInfo != null) facesBehaviorInfo.description();
 
-    private static String getValidatorDescription(Class<?> behaviorClass) {
-        FacesValidatorInfo annotation = behaviorClass.getAnnotation(FacesValidatorInfo.class);
-        return annotation == null ? null : annotation.description();
-    }
+        FacesValidatorInfo facesValidatorInfo = clazz.getAnnotation(FacesValidatorInfo.class);
+        if (facesValidatorInfo != null) facesValidatorInfo.description();
 
-    private static String getTagHandlerDescription(Class<?> tagHandlerClass) {
-        FacesTagHandler annotation = tagHandlerClass.getAnnotation(FacesTagHandler.class);
-        return annotation == null ? null : annotation.value();
+        FacesTagHandler facesTagHandler = clazz.getAnnotation(FacesTagHandler.class);
+        if (facesTagHandler != null) facesTagHandler.description();
+
+        return null;
     }
 
     private static String getComponentType(Class<?> componentClass) {
@@ -184,7 +199,7 @@ public final class TaglibUtils {
 
     public static ComponentInfo getComponentInfo(Class<?> componentClass) throws IllegalAccessException, ClassNotFoundException {
         ComponentInfo info = new ComponentInfo(componentClass,
-                getComponentDescription(componentClass),
+                getDescription(componentClass),
                 getComponentType(componentClass),
                 getRendererType(componentClass),
                 getTagName(componentClass),
@@ -197,7 +212,7 @@ public final class TaglibUtils {
 
     public static BehaviorInfo getBehaviorInfo(Class<?> behaviorClass) throws IllegalAccessException, ClassNotFoundException {
         BehaviorInfo info = new BehaviorInfo(behaviorClass,
-                getBehaviorDescription(behaviorClass),
+                getDescription(behaviorClass),
                 getBehaviorId(behaviorClass),
                 getRendererType(behaviorClass),
                 getTagName(behaviorClass),
@@ -208,9 +223,9 @@ public final class TaglibUtils {
         return info;
     }
 
-    public static ValidatorInfo getValidatorInfo(Class<?> validatorClass) throws IllegalAccessException, ClassNotFoundException {
+    public static ValidatorInfo getValidatorInfo(Class<?> validatorClass) throws ClassNotFoundException {
         ValidatorInfo info = new ValidatorInfo(validatorClass,
-                getValidatorDescription(validatorClass),
+                getDescription(validatorClass),
                 getValidatorId(validatorClass),
                 getTagName(validatorClass),
                 PrimeValidatorHandler.class);
@@ -220,9 +235,20 @@ public final class TaglibUtils {
         return info;
     }
 
-    public static TagHandlerInfo getTagHandlerInfo(Class<?> tagHandlerClass) throws IllegalAccessException, ClassNotFoundException {
+    public static ConverterInfo getConverterInfo(Class<?> converterClass) throws ClassNotFoundException {
+        ConverterInfo info = new ConverterInfo(converterClass,
+                getDescription(converterClass),
+                getTagName(converterClass),
+                PrimeConverterHandler.class);
+
+        info.setProperties(findAllProperties(converterClass, TagType.CONVERTER));
+
+        return info;
+    }
+
+    public static TagHandlerInfo getTagHandlerInfo(Class<?> tagHandlerClass) throws ClassNotFoundException {
         TagHandlerInfo info = new TagHandlerInfo(tagHandlerClass,
-                getTagHandlerDescription(tagHandlerClass),
+                getDescription(tagHandlerClass),
                 getTagName(tagHandlerClass));
 
         info.setProperties(findAllProperties(tagHandlerClass, TagType.TAG_HANDLER));
@@ -297,7 +323,7 @@ public final class TaglibUtils {
                         }
 
                         properties.put(propertyName,
-                                PropertyLiteral.fromPropertyKeys((PrimePropertyKeys) enumConstant));
+                                Property.Literal.of((PrimePropertyKeys) enumConstant));
                     }
                 }
             }

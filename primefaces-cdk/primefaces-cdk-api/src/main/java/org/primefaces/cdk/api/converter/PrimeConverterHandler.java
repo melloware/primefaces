@@ -21,30 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.primefaces.cdk.api;
+package org.primefaces.cdk.api.converter;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import jakarta.faces.view.facelets.MetaRuleset;
+import jakarta.faces.view.facelets.ValidatorConfig;
+import jakarta.faces.view.facelets.ValidatorHandler;
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE })
-@Inherited
-public @interface FacesTagHandler {
+public class PrimeConverterHandler extends ValidatorHandler {
+    public PrimeConverterHandler(ValidatorConfig config) {
+        super(config);
+    }
 
-    /**
-     * The name of the tag-handler.
-     *
-     * @return the tag-handler name
-     */
-    String name() default "";
+    @Override
+    protected MetaRuleset createMetaRuleset(Class type) {
+        MetaRuleset ruleset = super.createMetaRuleset(type);
+        ruleset.addRule(PrimeConverterMetaRule.INSTANCE);
 
-    /**
-     * The description text for the tag-handler.
-     *
-     * @return the tag-handler description
-     */
-    String description();
+        return ruleset;
+    }
 }

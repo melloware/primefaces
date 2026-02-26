@@ -24,27 +24,27 @@
 package org.primefaces.cdk.api;
 
 import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Marks an abstract converter base class for implementation generation.
+ *
+ * <p>Use this annotation on abstract classes to generate an implementation class.</p>
+ *
+ * <p>Example:</p>
+ * <pre>{@code
+ * @FacesConverterBase
+ * public abstract class FileConverterBase extends AbstractPrimeConverter {
+ *
+ * }
+ * }</pre>
+ *
+ * @see Property
+ */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE })
-@Inherited
-public @interface FacesTagHandler {
+@Target({ElementType.TYPE})
+public @interface FacesConverterBase {
 
-    /**
-     * The name of the tag-handler.
-     *
-     * @return the tag-handler name
-     */
-    String name() default "";
-
-    /**
-     * The description text for the tag-handler.
-     *
-     * @return the tag-handler description
-     */
-    String description();
 }

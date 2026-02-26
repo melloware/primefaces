@@ -24,27 +24,41 @@
 package org.primefaces.cdk.api;
 
 import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Provides a description for a Faces converter.
+ *
+ * <p>Use this annotation to document the purpose and functionality of
+ * a behavior class. The description can be used for taglib, documentation
+ * or other metadata purposes.</p>
+ *
+ * <p>Example:</p>
+ * <pre>{@code
+ * @FacesConverter(...)
+ * @FacesConverterInfo(description = "...")
+ * public class FileConverter extends FileConverterBaseImpl {
+ *
+ * }
+ * }</pre>
+ */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ ElementType.TYPE })
-@Inherited
-public @interface FacesTagHandler {
+@Target({ElementType.TYPE})
+public @interface FacesConverterInfo {
 
     /**
-     * The name of the tag-handler.
+     * The name of the converter.
      *
-     * @return the tag-handler name
+     * @return the converter name
      */
     String name() default "";
 
     /**
-     * The description text for the tag-handler.
+     * The description text for the converter.
      *
-     * @return the tag-handler description
+     * @return the converter description
      */
     String description();
 }
