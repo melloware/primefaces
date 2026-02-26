@@ -92,6 +92,7 @@ class FileUploadUtilsTest {
             when(file.getInputStream()).thenReturn(stream);
         }
         catch (IOException e) {
+            // we just need the catchblock for mocking
         }
         return file;
     }

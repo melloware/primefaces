@@ -64,8 +64,6 @@ public class DataRenderer<T extends UIComponent & Pageable> extends CoreRenderer
             .put("{JumpToPageInput}", new JumpToPageInputRenderer())
             .build();
 
-    private static final Pattern HTML_TAG_PATTERN = Pattern.compile("\\<.*?\\>");
-
     public static void addPaginatorElement(String element, PaginatorElementRenderer renderer) {
         PAGINATOR_ELEMENTS.put(element, renderer);
     }
