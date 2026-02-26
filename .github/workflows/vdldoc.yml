@@ -4,8 +4,6 @@ on:
   workflow_dispatch:
   push:
     branches: [ master, main ]
-    paths:
-      - 'primefaces/target/classes/META-INF/primefaces.taglib.xml'
 
 env:
   JAVA_VERSION: '11'
