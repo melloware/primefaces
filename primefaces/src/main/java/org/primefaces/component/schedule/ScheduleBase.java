@@ -85,12 +85,6 @@ public abstract class ScheduleBase extends UIComponentBase implements Widget, RT
             defaultValue = "true")
     public abstract boolean isShowWeekends();
 
-    @Property(description = "Style of the main container element of schedule.")
-    public abstract String getStyle();
-
-    @Property(description = "Style class of the main container element of schedule.")
-    public abstract String getStyleClass();
-
     @Property(description = "When true, events are draggable.",
             defaultValue = "true")
     public abstract boolean isDraggable();

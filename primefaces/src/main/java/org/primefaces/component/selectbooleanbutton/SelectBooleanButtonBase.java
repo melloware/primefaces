@@ -67,9 +67,6 @@ public abstract class SelectBooleanButtonBase extends HtmlSelectBooleanCheckbox 
         return COMPONENT_FAMILY;
     }
 
-    @Property(description = "Name of the client side widget.")
-    public abstract String getWidgetVar();
-
     @Property(description = "Custom label for on state.")
     public abstract String getOnLabel();
 
