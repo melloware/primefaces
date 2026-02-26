@@ -44,7 +44,6 @@ import org.primefaces.util.WidgetBuilder;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
