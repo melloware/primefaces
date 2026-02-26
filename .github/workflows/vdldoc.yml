@@ -5,7 +5,7 @@ on:
   push:
     branches: [ master, main ]
     paths:
-      - 'primefaces/src/main/resources/META-INF/primefaces.taglib.xml'
+      - 'primefaces/target/classes/META-INF/primefaces.taglib.xml'
 
 env:
   JAVA_VERSION: '11'
@@ -36,7 +36,7 @@ jobs:
           git config --local user.name "GitHub Action"
 
       - name: Generate TagLib
-        run: mvn clean install -DskipTests
+        run: mvn clean install -pl primefaces -am -DskipTests
 
       - name: Generate VDL Documentation
         working-directory: primefaces
