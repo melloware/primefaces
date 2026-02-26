@@ -120,13 +120,13 @@ public final class TaglibUtils {
         if (name.endsWith("Behavior")) {
             name = name.substring(0, name.length() - "Behavior".length());
         }
-        if (name.endsWith("TagHandler")) {
+        else if (name.endsWith("TagHandler")) {
             name = name.substring(0, name.length() - "TagHandler".length());
         }
-        if (name.endsWith("Converter")) {
+        else if (name.endsWith("Converter")) {
             name = name.substring(0, name.length() - "Converter".length());
         }
-        if (name.endsWith("Validator")) {
+        else if (name.endsWith("Validator")) {
             name = name.substring(0, name.length() - "Validator".length());
         }
         return name;
