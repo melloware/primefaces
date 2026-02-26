@@ -3,7 +3,7 @@ name: Generate VDL Documentation
 on:
   workflow_dispatch:
   push:
-    branches: [ 15.X ]
+    branches: [ master, main ]
     paths:
       - 'primefaces/src/main/resources/META-INF/primefaces.taglib.xml'
 
@@ -34,6 +34,9 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+
+      - name: Generate TagLib
+        run: mvn clean install -DskipTests
 
       - name: Generate VDL Documentation
         working-directory: primefaces
