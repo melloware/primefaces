@@ -47,15 +47,15 @@ jobs:
       - name: Check for changes
         id: check-changes
         run: |
-          if [ -n "$(git status --porcelain)" ]; then
+          if [ -n "$(git status --porcelain docs/vdldoc/)" ]; then
             echo "changes=true" >> $GITHUB_OUTPUT
           else
             echo "changes=false" >> $GITHUB_OUTPUT
           fi
-
+      
       - name: Commit and push changes
         if: steps.check-changes.outputs.changes == 'true'
         run: |
           git add docs/vdldoc/
-          git commit -m "Update VDL documentation [skip ci]"
+          git diff --cached --quiet || git commit -m "Update VDL documentation [skip ci]"
           git push
